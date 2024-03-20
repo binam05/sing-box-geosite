@@ -5,13 +5,18 @@ on:
     branches: [ main ]
   workflow_dispatch:
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '30 23 * * *'
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+    - name: "Set variables"
+      run: |
+        echo "RELEASE_NAME=Update rules $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+        echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+      shell: bash
     - uses: actions/checkout@v2
     - name: "Setup sing-box"
       env:
@@ -43,6 +48,7 @@ jobs:
           echo "No changes to commit"
           exit 0
         else
-          git commit -m "Update rules"
+          git commit -m "${{ env.RELEASE_NAME }}"
+          git tag ${{ env.TAG_NAME }}
           git push
         fi
