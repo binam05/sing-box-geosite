@@ -51,4 +51,5 @@ jobs:
           git commit -m "${{ env.RELEASE_NAME }}"
           git tag ${{ env.TAG_NAME }}
           git push
+          git push origin --tags
         fi
