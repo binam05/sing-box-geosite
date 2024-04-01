@@ -43,10 +43,13 @@
 - **需要直连的常见软件列表 applications.json**：
   - [https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/applications.json](https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/applications.json)
   - [https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/applications.srs](https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/applications.srs)
+- **OpenAI及相关AI地址列表 OpenAI.json**：
+  - [https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/OpenAI.json](https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/OpenAI.json)
+  - [https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/OpenAI.srs](https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/OpenAI.srs)
 
 ## 使用方式
 规则集配置提供`json`和`srs`两种格式可以使用。
-提供了一个sing-gox的规则集示例[sing-gox.json](https://github.com/binam05/sing-box-geosite/sing-gox.json)，可以直接使用。需要修改里面的`你的节点`和相应的节点配置，另外`你的直连域名`可以修改需要直连的域名，根据需要选择。
+提供了一个sing-gox的规则集示例[sing-gox.json](https://github.com/binam05/sing-box-geosite/blob/main/sing-box.json)，可以直接使用。需要修改里面的`你的节点`和相应的节点配置，另外`你的直连域名`可以修改需要直连的域名，根据需要选择。
 
 
 # sing-box-geosite
