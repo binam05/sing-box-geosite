@@ -1,0 +1,491 @@
+{
+  "log": {
+    "level": "info"
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "dns_proxy",
+        "address": "https://1.1.1.1/dns-query",
+        "address_resolver": "dns_resolver",
+        "strategy": "ipv4_only",
+        "detour": "🌐 全球代理"
+      },
+      {
+        "tag": "dns_direct",
+        "address": "h3://dns.alidns.com/dns-query",
+        "address_resolver": "dns_resolver",
+        "strategy": "ipv4_only",
+        "detour": "direct"
+      },
+      {
+        "tag": "dns_block",
+        "address": "rcode://refused"
+      },
+      {
+        "tag": "dns_resolver",
+        "address": "223.5.5.5",
+        "strategy": "ipv4_only",
+        "detour": "direct"
+      }
+    ],
+    "rules": [
+      {
+        "clash_mode": "global",
+        "server": "dns_proxy"
+      },
+      {
+        "rule_set": [
+          "rule-OpenAI",
+          "rule-google",
+          "rule-proxy",
+          "rule-gfw",
+          "rule-telegramcidr"
+        ],
+        "server": "dns_proxy"
+      },
+      {
+        "clash_mode": "direct",
+        "server": "dns_direct"
+      },
+      {
+        "process_name": [
+          "TencentMeeting",
+          "NemoDesktop",
+          "ToDesk",
+          "ToDesk_Service",
+          "WeChat",
+          "Tailscale",
+          "wireguard-go",
+          "Tunnelblick",
+          "softwareupdated",
+          "kubectl"
+        ],
+        "server": "dns_direct"
+      },
+      {
+        "rule_set": [
+          "rule-applications",
+          "rule-private",
+          "rule-icloud",
+          "rule-apple",
+          "rule-direct",
+          "geoip-cn"
+        ],
+        "server": "dns_direct"
+      },
+      {
+        "outbound": "any",
+        "server": "dns_resolver"
+      }
+    ],
+    "final": "dns_resolver"
+  },
+  "ntp": {
+    "enabled": true,
+    "server": "time.nist.gov",
+    "server_port": 123,
+    "interval": "30m0s",
+    "detour": "direct"
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "inet4_address": "198.18.0.1/16",
+      "auto_route": true,
+      "exclude_package": [
+        "cmb.pb",
+        "cn.gov.pbc.dcep",
+        "com.MobileTicket",
+        "com.adguard.android",
+        "com.ainemo.dragoon",
+        "com.alibaba.android.rimet",
+        "com.alicloud.databox",
+        "com.amazing.cloudisk.tv",
+        "com.autonavi.minimap",
+        "com.bilibili.app.in",
+        "com.bishua666.luxxx1",
+        "com.cainiao.wireless",
+        "com.chebada",
+        "com.chinamworld.main",
+        "com.cmbchina.ccd.pluto.cmbActivity",
+        "com.coolapk.market",
+        "com.ctrip.ct",
+        "com.dianping.v1",
+        "com.douban.frodo",
+        "com.eg.android.AlipayGphone",
+        "com.farplace.qingzhuo",
+        "com.hanweb.android.zhejiang.activity",
+        "com.leoao.fitness",
+        "com.lucinhu.bili_you",
+        "com.mikrotik.android.tikapp",
+        "com.moji.mjweather",
+        "com.motorola.cn.calendar",
+        "com.motorola.cn.lrhealth",
+        "com.netease.cloudmusic",
+        "com.sankuai.meituan",
+        "com.sina.weibo",
+        "com.smartisan.notes",
+        "com.sohu.inputmethod.sogou.moto",
+        "com.sonelli.juicessh",
+        "com.ss.android.article.news",
+        "com.ss.android.lark",
+        "com.ss.android.ugc.aweme",
+        "com.tailscale.ipn",
+        "com.taobao.idlefish",
+        "com.taobao.taobao",
+        "com.tencent.mm",
+        "com.tencent.mp",
+        "com.tencent.soter.soterserver",
+        "com.tencent.wemeet.app",
+        "com.tencent.weread",
+        "com.tencent.wework",
+        "com.ttxapps.wifiadb",
+        "com.unionpay",
+        "com.unnoo.quan",
+        "com.wireguard.android",
+        "com.xingin.xhs",
+        "com.xunmeng.pinduoduo",
+        "com.zui.zhealthy",
+        "ctrip.android.view",
+        "io.kubenav.kubenav",
+        "org.geekbang.geekTime",
+        "tv.danmaku.bili"
+      ],
+      "stack": "mixed",
+      "sniff": true
+    },
+    {
+      "type": "socks",
+      "tag": "socks-in",
+      "listen": "0.0.0.0",
+      "listen_port": 7891
+    },
+    {
+      "type": "http",
+      "tag": "http-in",
+      "listen": "0.0.0.0",
+      "listen_port": 7890
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "💡 自动选择",
+      "type": "urltest",
+      "outbounds": [
+        "你的节点1",
+        "你的节点2"
+      ]
+    },
+    {
+      "tag": "🌐 节点选择",
+      "type": "selector",
+      "default": "💡 自动选择",
+      "outbounds": [
+        "💡 自动选择",
+        "你的outbounds节点1",
+        "你的outbounds节点2"
+      ]
+    },
+    {
+      "tag": "🪳 例外网站",
+      "type": "selector",
+      "default": "🌍 全球直连",
+      "outbounds": [
+        "🌍 全球直连",
+        "🌐 节点选择",
+        "💡 自动选择"
+      ]
+    },
+    {
+      "tag": "🍎 苹果服务",
+      "type": "selector",
+      "default": "🌍 全球直连",
+      "outbounds": [
+        "🌍 全球直连",
+        "🌐 节点选择",
+        "💡 自动选择"
+      ]
+    },
+    {
+      "tag": "🤖 OPENAI",
+      "type": "selector",
+      "outbounds": [
+        "🌐 节点选择",
+        "💡 自动选择"
+      ]
+    },
+    {
+      "tag": "🌐 全球代理",
+      "type": "selector",
+      "default": "🌐 节点选择",
+      "outbounds": [
+        "🌐 节点选择",
+        "💡 自动选择",
+        "🌍 全球直连"
+      ]
+    },
+    {
+      "tag": "🌍 全球直连",
+      "type": "selector",
+      "default": "direct",
+      "outbounds": [
+        "direct",
+        "🌐 节点选择",
+        "💡 自动选择"
+      ]
+    },
+    {
+      "tag": "🛡 全球拦截",
+      "type": "selector",
+      "default": "block",
+      "outbounds": [
+        "block",
+        "direct",
+        "🌐 节点选择",
+        "💡 自动选择"
+      ]
+    },
+    {
+      "tag": "direct",
+      "type": "direct"
+    },
+    {
+      "tag": "block",
+      "type": "block"
+    },
+    {
+      "tag": "dns-out",
+      "type": "dns"
+    },
+    {
+      "tag": "你的节点1",
+      "type": "vmess",
+      "address": "你的节点地址",
+      "port": "你的节点端口",
+      "user": "你的节点用户名",
+      "pass": "你的节点密码"
+    },
+    {
+      "tag": "你的节点2",
+      "type": "hysteria2",
+      "address": "你的节点地址",
+      "port": "你的节点端口",
+      "user": "你的节点用户名",
+      "pass": "你的节点密码"
+    }
+  ],
+  "route": {
+    "rules": [
+      {
+        "protocol": "dns",
+        "outbound": "dns-out"
+      },
+      {
+        "clash_mode": "direct",
+        "outbound": "direct"
+      },
+      {
+        "clash_mode": "global",
+        "outbound": "🌐 全球代理"
+      },
+      {
+        "rule_set": [
+          "rule-applications"
+        ],
+        "outbound": "🌍 全球直连"
+      },
+      {
+        "domain": [
+          "clash.razord.top",
+          "yacd.haishan.me"
+        ],
+        "outbound": "🌍 全球直连"
+      },
+      {
+        "domain_suffix": [
+          "你的直连域名1",
+          "你的直连域名2"
+        ],
+        "outbound": "🌍 全球直连"
+      },
+      {
+        "rule_set": [
+          "rule-OpenAI"
+        ],
+        "outbound": "🤖 OPENAI"
+      },
+      {
+        "rule_set": [
+          "rule-private"
+        ],
+        "outbound": "🌍 全球直连"
+      },
+      {
+        "rule_set": [
+          "rule-private"
+        ],
+        "outbound": "🌍 全球直连"
+      },
+      {
+        "rule_set": [
+          "rule-reject"
+        ],
+        "outbound": "🛡 全球拦截"
+      },
+      {
+        "rule_set": [
+          "rule-icloud",
+          "rule-apple"
+        ],
+        "outbound": "🍎 苹果服务"
+      },
+      {
+        "rule_set": [
+          "rule-google",
+          "rule-proxy",
+          "rule-gfw",
+          "rule-telegramcidr"
+        ],
+        "outbound": "🌐 全球代理"
+      },
+      {
+        "rule_set": [
+          "rule-direct",
+          "rule-lancidr",
+          "rule-cncidr"
+        ],
+        "outbound": "🌍 全球直连"
+      },
+      {
+        "protocol": "quic",
+        "outbound": "block"
+      },
+      {
+        "rule_set": "geoip-cn",
+        "outbound": "🌍 全球直连"
+      },
+      {
+        "ip_is_private": true,
+        "outbound": "🌍 全球直连"
+      }
+    ],
+    "rule_set": [
+      {
+        "type": "remote",
+        "tag": "rule-reject",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/reject.srs",
+        "download_detour": "direct"
+      },
+      {
+        "type": "remote",
+        "tag": "rule-icloud",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/icloud.srs",
+        "download_detour": "direct"
+      },
+      {
+        "type": "remote",
+        "tag": "rule-apple",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/apple.srs",
+        "download_detour": "direct"
+      },
+      {
+        "type": "remote",
+        "tag": "rule-google",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/google.srs",
+        "download_detour": "direct"
+      },
+      {
+        "type": "remote",
+        "tag": "rule-proxy",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/proxy.srs",
+        "download_detour": "direct"
+      },
+      {
+        "type": "remote",
+        "tag": "rule-direct",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/direct.srs",
+        "download_detour": "direct"
+      },
+      {
+        "type": "remote",
+        "tag": "rule-private",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/private.srs",
+        "download_detour": "direct"
+      },
+      {
+        "type": "remote",
+        "tag": "rule-gfw",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/gfw.srs",
+        "download_detour": "direct"
+      },
+      {
+        "type": "remote",
+        "tag": "rule-greatfire",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/greatfire.srs",
+        "download_detour": "direct"
+      },
+      {
+        "type": "remote",
+        "tag": "rule-tld-not-cn",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/tld-not-cn.srs",
+        "download_detour": "direct"
+      },
+      {
+        "type": "remote",
+        "tag": "rule-telegramcidr",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/telegramcidr.srs",
+        "download_detour": "direct"
+      },
+      {
+        "type": "remote",
+        "tag": "rule-cncidr",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/cncidr.srs",
+        "download_detour": "direct"
+      },
+      {
+        "type": "remote",
+        "tag": "rule-lancidr",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/lancidr.srs",
+        "download_detour": "direct"
+      },
+      {
+        "type": "remote",
+        "tag": "rule-applications",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/applications.srs",
+        "download_detour": "direct"
+      },
+      {
+        "type": "remote",
+        "tag": "rule-OpenAI",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/OpenAI.srs",
+        "download_detour": "direct"
+      },
+      {
+        "type": "remote",
+        "tag": "geoip-cn",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/geoip-cn.srs",
+        "download_detour": "direct"
+      }
+    ],
+    "final": "🪳 例外网站",
+    "find_process": true,
+    "auto_detect_interface": true
+  }
+}
