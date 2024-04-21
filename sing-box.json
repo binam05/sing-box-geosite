@@ -480,7 +480,7 @@
         "type": "remote",
         "tag": "geoip-cn",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/binam05/sing-box-geosite/main/Loyalsoldier_clash_rules/geoip-cn.srs",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
         "download_detour": "direct"
       }
     ],
