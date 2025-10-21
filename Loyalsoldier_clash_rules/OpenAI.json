@@ -94,6 +94,7 @@
     },
     {
       "domain_suffix": [
+        "abtest-sg.byteoversea.com",
         "ai.azure.com",
         "ai.com",
         "aistudio.google.com",
@@ -129,7 +130,6 @@
         "chatgpt.livekit.cloud",
         "cici.com",
         "ciciai.com",
-        "ciciai.com",
         "circumlunar.space",
         "civitai.com",
         "claude.ai",
@@ -155,6 +155,7 @@
         "dify.ai",
         "difyai.com",
         "ditu.live.com",
+        "dola.com",
         "doubleclick.net",
         "edgecompute.app",
         "edgeservices.bing.com",
