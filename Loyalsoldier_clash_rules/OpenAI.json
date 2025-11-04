@@ -95,7 +95,6 @@
     },
     {
       "domain_suffix": [
-        "abtest-sg.byteoversea.com",
         "ai.azure.com",
         "ai.com",
         "aistudio.google.com",
@@ -122,6 +121,7 @@
         "blob.core.windows.net",
         "bluehatnights.com",
         "bortzmeyer.org",
+        "byteoversea.com",
         "cdn.auth0.com",
         "cdn.cloudflare.net",
         "challenges.cloudflare.com",
