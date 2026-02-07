@@ -77,27 +77,6 @@
       ]
     },
     {
-      "domain_keyword": [
-        "alkalimakersuite-pa.clients6.google.com",
-        "anthropic",
-        "chatgpt",
-        "claude",
-        "cloudflare",
-        "colab",
-        "developerprofiles",
-        "generativelanguage",
-        "grok",
-        "labs.google",
-        "notebooklm.google",
-        "openai",
-        "openaiapi",
-        "openaicom",
-        "openaicom-api",
-        "perplexity",
-        "prodregistryv"
-      ]
-    },
-    {
       "domain_suffix": [
         "ai.azure.com",
         "ai.com",
